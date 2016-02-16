@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>
+        Socket.IO Chat
+    </title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+
+<body>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" />
+        <button>Send</button>
+    </form>
+    <!-- <script type="text/javascript" src="chat_front.js"></script> -->
+
+<!--
+    <div id="chatbox" class="container">
+
+        <div class="bubble ">
+            Test
+        </div>
+
+        <div class="bubble bubble--alt">
+            Test
+        </div>,
+    </div> -->
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var socket = io();
+        $('form').submit(function() {
+            socket.emit('chat message', $('#m').val());
+            // var sentmessage = $('#m').val();
+            // $('#chatbox').append($('<div>').text(sentmessage).class("bubble");
+            $('#m').val('');
+            return false;
+        });
+        socket.on('chat message', function(message) {
+            $('#messages').append($('<li>').text(message));
+            // $('#chatbox').append($('<div>').text(message)).class("bubble bubble--alt");
+            // $('#chatbox').append($('<div class="bubble bubble--alt"/>', {value: 'hello'}));
+        });
+    </script>
+</body>
+
+</html>
